@@ -30,21 +30,36 @@ const UpdateStudent = ({ student }) => {
     )
 }
 
-export const getStaticPaths = async () => {
-    const paths = await student_ids();
-    return {
-        paths,
-        fallback: true
-    }
-}
-export const getStaticProps = async ({ params: { id } }) => {
+// export const getStaticPaths = async () => {
+//     const paths = await student_ids();
+//     return {
+//         paths,
+//         fallback: true
+//     }
+// }
+// export const getStaticProps = async ({ params: { id } }) => {
+//     try {
+//         const student = await getStudentById(id);
+//         return {
+//             props: {
+//                 student
+//             },
+//             revalidate: 1,
+//         }
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+// Mỗi 1 request mới bắt đầu đi lấy data và tạo ra html mới
+// Còn getStaticProps là khi build đã đi lấy về rồi và lần nào request cũng trả về kết quả giống nhau
+// Dữ liệu phụ thuộc vào mỗi request, nhưng mà vẫn tạo ra HTML tĩnh cho front-end, nên vẫn tốt cho SEO
+export const getServerSideProps = async ({ params: { id } }) => {
     try {
         const student = await getStudentById(id);
         return {
             props: {
                 student
             },
-            revalidate: 1,
         }
     } catch (error) {
         console.log(error);

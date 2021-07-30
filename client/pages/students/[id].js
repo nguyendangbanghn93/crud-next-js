@@ -64,7 +64,6 @@ const StudentDetail = ({ student }) => {
 // Còn getStaticProps là khi build đã đi lấy về rồi và lần nào request cũng trả về kết quả giống nhau
 // Dữ liệu phụ thuộc vào mỗi request, nhưng mà vẫn tạo ra HTML tĩnh cho front-end, nên vẫn tốt cho SEO
 export const getServerSideProps = async ({ params: { id } }) => {
-
     try {
         const student = await getStudentById(id);
         return {
@@ -74,12 +73,6 @@ export const getServerSideProps = async ({ params: { id } }) => {
         }
     } catch (error) {
         console.log(error);
-    }
-    return {
-        props: {
-            student
-        },
-        revalidate: 1,
     }
 }
 
